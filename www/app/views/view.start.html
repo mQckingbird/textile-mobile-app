@@ -1,0 +1,183 @@
+<div ng-controller="StartCtrl" class="sample tabsdemoDynamicTabs"  ng-cloak="">
+    <div  layout="row" layout-fill>
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2 appsidenav" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" layour="row" style="overflow:hidden;" flex-sm>
+    <md-toolbar class="md-tall md-hue-2 sidenavc" layout-align="end end">
+      <div class="md-toolbar-tools" layout style="padding:10px">
+        <div layout="column" style="color: #484848;" layout-padding>
+          <span class="md-body-2" style="padding:0;">{{ArrayTextile.author}}</span>
+          <span class="md-caption" style="padding:0;">{{ArrayTextile.email}}</span>
+        </div>
+        <span flex></span>
+         <md-menu md-position-mode="target-right target" style="margin:0 !important;">
+                                  <md-button aria-label="Languages" ng-click="$mdOpenMenu($event)" class="md-icon-button" style="margin:0;">
+                                            <i class="material-icons text-light" style="color: rgba(255,255,255,.8);" >translate</i>
+                                   </md-button>
+                            <md-menu-content width="4">
+                              <md-menu-item ng-click="changeLanguage('es')">
+                                <md-button ng-click="ctrl.announceClick($index)" aria-label="ES">
+                                    <div layout="row" flex>
+                                      <p flex>{{ 'LANGUAGE_ES' | translate }}</p>
+                              			<i class="material-icons text-light" ng-show="ArrayTextile.lang == 'es'">settings</i>
+                                    </div>
+                                </md-button>
+                              </md-menu-item>
+                              <md-menu-item>
+                                <md-button ng-click="changeLanguage('en')" aria-label="EN">
+                                    <div layout="row" flex>
+                                      <p flex>{{ 'LANGUAGE_EN' | translate }}</p>
+                                      <i class="material-icons text-light" ng-show="ArrayTextile.lang == 'en'">check</i>
+                                	
+                                    </div>
+                                </md-button>
+                              </md-menu-item>
+                            </md-menu-content>
+                          </md-menu>
+        <md-button class="md-icon-button" aria-label="Preferencias" ng-click="configuretextile()">
+              <i class="material-icons text-light" style="color: rgba(255,255,255,.8);">settings</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <perfect-scrollbar class="scroll-wrapper" opts="scrollopts">
+    <md-content role="navigation">
+  
+      <md-list class="appsidenav" >
+     <!-- loadchaps(project._id) -->
+        <md-list-item ng-click="loadchaps('default')" ng-class="{ active: isSet('default') }">
+          <p class="md-subheader md-primary">{{ 'FILES' | translate }}</p>
+          <span flex></span>
+          <i class="material-icons text-light">chevron_right</i>
+        </md-list-item>
+        </md-list>
+
+      <md-list ng-repeat="project in projects" md-selected="selectedIndex" class="appsidenav">
+     <!-- loadchaps(project._id) -->
+        <md-list-item ng-click=" loadchaps(project._id);" ng-class="{ active: isSet(project._id) }">
+
+            <i class="material-icons text-light" style="color: rgba(255,255,255,.8);">loyalty</i>
+          <p class="md-subheader md-primary" ng-class="{ active: isSet(project._id) }">{{project.title}}</p>
+          <span flex></span>
+          <i class="material-icons text-light" style="color: rgba(255,255,255,.8);" style="margin-right:0px !important;">{{isSet(project._id) ? 'fingerprint' : 'arrow_drop_down'}}</i>
+             </md-list-item>
+
+        <md-list-item ng-show="isSet(project._id)" ng-click="settingsproj(project)" id="expanditem">
+            <i class="material-icons text-light" style="color: rgba(255,255,255,.8);">filter_tilt_shift</i>
+          <p class="md-body-2">{{ 'SETTINGS' | translate }}</p>
+        </md-list-item>
+
+      </md-list>
+
+    </md-content>
+    </perfect-scrollbar>
+
+    <div class="wannawrite">
+     <md-button ng-click="newProject()" class="md-raised newprojectbutton" style="width:95%">
+           {{ 'NEW_PROJECT' | translate }}
+          </md-button>
+          </div>
+  </md-sidenav>
+  <section layout="column" role="main" flex>
+        <md-content style="overflow: hidden !important;">
+        
+    
+          <md-button ui-sref="courses" class="addchapter add-tab md-icon-button" ng-click="addTab()" aria-label="Añadir">
+                    <i class="material-icons text-light" style="color: rgba(255,255,255,.8);">library_add</i>
+                </md-button>
+                 <md-button ui-sref="courses" class="addchapter add-tab md-icon-button" ng-click="toggleSidenav('left')" style="left:0;" aria-label="Navegación">
+                 <i class="material-icons menu" style="color: rgba(255,255,255,.8);">menu</i>
+                </md-button>
+                <div id="setfirsttoolbar"> </div>
+
+                 <div id="cuatrocuatro" class="fade" ng-show="tabs.length <= 0">
+                  <div class="cuatroarbol">
+                  <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="main">
+                      <h1><i class="material-icons text-light" style="font-size:50px;">now_widgets</i></ng-md-icon></h1>
+                      <p>{{ 'TREE_EMPTY' | translate }}<br>{{'HOW_ABOUT_CREATE_ONE' | translate }}</p>
+                      <md-button class="md-primary md-raised" ng-click="addTab()">{{ 'NEW' | translate }}</md-button>
+                     </div>
+                     </div>
+                  </div>
+          <md-tabs class="apptabs100 tabshorz" md-selected="selectedIndex" md-autoselect="" md-border-bottom="" md-autoselect="" style="height:100vh;">
+          
+
+            <md-tab ng-repeat="tab in tabs" ng-disabled="tab.disabled" label="{{tab.title}}" ng-click="setID(tab._id)" style="height:calc(100vh - 48px);">
+            
+
+             <md-toolbar class="toolbarwork" style="position:fixed;">
+              <!-- The actual toolbar item container. top-z now has to be applied to all affordances -->
+              <div class="md-toolbar-tools" style="padding:0px 1px 0 5px;">
+              <span editbutton></span>
+                 <h2 editfield="tab.title" editor-enabled="editorEnabled">{{ tab.title }}</h2>
+                <span flex></span>
+
+                          <md-button ng-click="removeTab(tab)" ng-disabled="tabs.length <= 1" class="nopadding whitewhite" aria-label="Eliminar" style="vertical-align: middle;display: inline-flex;margin-right:4px;padding-left: 8px !important;">
+                             <i class="material-icons text-light" style="color: rgba(255,255,255,.8);">delete</i>
+                          </md-button>
+
+                          <md-menu md-position-mode="target-right target">
+                                  <md-button aria-label="Exportar artículo" ng-click="$mdOpenMenu($event)" class=" nopadding whitewhite" style="vertical-align: middle;display: inline-flex; margin-right:13px; padding-left: 8px !important;">
+                                         <i class="material-icons text-light" style="padding-top:3px">archive</i>
+                                   </md-button>
+                            <md-menu-content width="4">
+                              <md-menu-item ng-click="PDF_Single()">
+                                <md-button ng-click="ctrl.announceClick($index)" aria-label="PDF">
+                                    <div layout="row" flex>
+                                      <p flex>{{ 'ARTICLE_AS_PDF' | translate }}</p>
+                                      <ng-md-icon md-menu-align-target icon="picture_as_pdf" style="width: 24px; height: 24px;"></ng-md-icon>
+                              
+                                    </div>
+                                </md-button>
+                              </md-menu-item>
+                              <md-menu-item>
+                                <md-button ng-click="EPUB_Single()" aria-label="EPUB">
+                                    <div layout="row" flex>
+                                      <p flex>{{ 'ARTICLE_AS_EPUB' | translate }}</p>
+                                      <ng-md-icon md-menu-align-target icon="view_carousel" style="width: 24px; height: 24px;"></ng-md-icon>
+                                
+                                    </div>
+                                </md-button>
+                              </md-menu-item>
+                              <md-menu-item>
+                                <md-button ng-click="TXT_Single()" aria-label="txt">
+                                    <div layout="row" flex>
+                                      <p flex>{{ 'ARTICLE_AS_TXT' | translate }}</p>
+                                      <ng-md-icon md-menu-align-target icon="text_format" style="width: 24px; height: 24px;"></ng-md-icon>
+                          
+                                    </div>
+                                </md-button>
+                              </md-menu-item>
+                              <md-menu-item>
+                                <md-button ng-click="HTML_Single()" aria-label="html">
+                                    <div layout="row" flex>
+                                      <p flex>{{ 'ARTICLE_AS_HTML' | translate }}</p>
+                                      <ng-md-icon md-menu-align-target icon="web" style="width: 24px; height: 24px;"></ng-md-icon>
+                                
+                                    </div>
+                                </md-button>
+                              </md-menu-item>
+                            </md-menu-content>
+                          </md-menu>
+                   </div>
+            </md-toolbar>
+              <div class="demo-tab tab{{tab%4}}" style="padding: 25px;">
+              <div id="paddingeditor">
+              <div id="{{tab._id}}" ng-model="tab.content" ng-model-options="{ debounce: 2000 }" save="saveData(tab._id)" medium-editor class="medium-editor paper">
+                
+     </div>         </div>
+
+              </div>
+            </md-tab>
+         
+          </md-tabs>
+
+          <div id="projectactual" style="display:none;"></div>
+            
+        </md-content>
+       
+        </section>
+        </div>
+    </div>
