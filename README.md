@@ -39,6 +39,7 @@ $ cordova platform add android
 ```
 
 There you have it. Now, paste the zipped files in *Textile* folder.
+When the files are copied, now we can proceed to build the binaries.
 
 #### Build app
 ```
