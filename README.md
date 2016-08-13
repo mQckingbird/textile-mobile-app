@@ -19,8 +19,8 @@ Pay attention.
 
 #### You can help in our cause. «¿Do you need a hand? I have two»
 ```
-$ git clone https://github.com/matikbird/textile
-$ cd textile
+$ git clone https://github.com/matikbird/textile-mobile-app
+$ cd textile-mobile-app
 ```
 
 Introduce those commands in your CLI and you will have access to the files (or download it here as a ZIP).
